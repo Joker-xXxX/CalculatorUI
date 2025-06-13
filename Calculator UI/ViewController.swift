@@ -49,20 +49,31 @@ class ViewController: UIViewController {
     func configureButtons() {
         view.addSubview(verticalStackView)
         
+        let orangeButton: Set<String> = ["+", "-", "*", "/", "AC", "="]
+        
+        func makeButton(titleValue: String, action: Selector? = nil, backgroundColor : UIColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)) -> UIButton {
+            let button = UIButton(type: .custom)
+            button.setTitle(titleValue, for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.backgroundColor = backgroundColor
+            button.layer.cornerRadius = 40
+            button.clipsToBounds = true
+            button.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 80, height: 80)) 
+            }
+            if let action = action {
+                button.addTarget(self, action: action, for: .touchUpInside)
+            }
+            return button
+        }
+        // 버튼 배열 만들기
         for row in buttonRows {
             let buttons = row.map { title -> UIButton in
-                let button = UIButton(type: .system)
-                button.setTitle(title, for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-                button.layer.cornerRadius = 40
-                button.clipsToBounds = true
-                button.snp.makeConstraints { make in
-                    make.size.equalTo(CGSize(width: 80, height: 80))
-                }
-                return button
+                let bgColor: UIColor = orangeButton.contains(title) ? . orange :UIColor (red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                return makeButton(titleValue: title, backgroundColor: bgColor)
             }
+            
             
             let horizontalStack = makeHorizontalStackView(buttons)
             verticalStackView.addArrangedSubview(horizontalStack)
