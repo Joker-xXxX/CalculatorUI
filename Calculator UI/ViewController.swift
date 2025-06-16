@@ -3,11 +3,28 @@ import SnapKit
 
 class ViewController: UIViewController {
     
+    @objc func didTapButton(_ sender: UIButton) {
+        guard let input = sender.title(for: .normal) else { return }
+        var current = formulaLabel.text ?? "0"
+        
+        if current == "0" && !"÷×+-*/=".contains(input) {
+            current = ""
+        }
+        
+        current += input
+        
+        if let number = Int(current) {
+            formulaLabel.text = String(number)
+        } else {
+            formulaLabel.text = current
+        }
+    }
+    
     let formulaLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .black
         label.textColor = .white
-        label.text = "12345"
+        label.text = "0"
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: 60)
         return label
@@ -60,24 +77,25 @@ class ViewController: UIViewController {
             button.layer.cornerRadius = 40
             button.clipsToBounds = true
             button.snp.makeConstraints { make in
-                make.size.equalTo(CGSize(width: 80, height: 80)) 
+                make.size.equalTo(CGSize(width: 80, height: 80))
             }
+            
             if let action = action {
                 button.addTarget(self, action: action, for: .touchUpInside)
             }
+            
             return button
         }
-        // 버튼 배열 만들기
         for row in buttonRows {
             let buttons = row.map { title -> UIButton in
                 let bgColor: UIColor = orangeButton.contains(title) ? . orange :UIColor (red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-                return makeButton(titleValue: title, backgroundColor: bgColor)
+                return makeButton(titleValue: title, action: #selector(didTapButton(_:)), backgroundColor: bgColor)
+                
             }
-            
-            
             let horizontalStack = makeHorizontalStackView(buttons)
             verticalStackView.addArrangedSubview(horizontalStack)
         }
+        
         
         verticalStackView.snp.makeConstraints { make in
             make.top.equalTo(formulaLabel.snp.bottom).offset(60)
@@ -98,3 +116,5 @@ class ViewController: UIViewController {
         return stackView
     }
 }
+
+
