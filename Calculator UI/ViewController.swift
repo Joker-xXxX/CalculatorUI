@@ -5,6 +5,12 @@ class ViewController: UIViewController {
     
     @objc func didTapButton(_ sender: UIButton) {
         guard let input = sender.title(for: .normal) else { return }
+        
+        if input == "AC" {
+            formulaLabel.text = "0"
+            return
+        }
+        
         var current = formulaLabel.text ?? "0"
         
         if current == "0" && !"÷×+-*/=".contains(input) {
@@ -86,16 +92,15 @@ class ViewController: UIViewController {
             
             return button
         }
+        
         for row in buttonRows {
             let buttons = row.map { title -> UIButton in
-                let bgColor: UIColor = orangeButton.contains(title) ? . orange :UIColor (red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                let bgColor: UIColor = orangeButton.contains(title) ? .orange : UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
                 return makeButton(titleValue: title, action: #selector(didTapButton(_:)), backgroundColor: bgColor)
-                
             }
             let horizontalStack = makeHorizontalStackView(buttons)
             verticalStackView.addArrangedSubview(horizontalStack)
         }
-        
         
         verticalStackView.snp.makeConstraints { make in
             make.top.equalTo(formulaLabel.snp.bottom).offset(60)
@@ -116,5 +121,3 @@ class ViewController: UIViewController {
         return stackView
     }
 }
-
-
