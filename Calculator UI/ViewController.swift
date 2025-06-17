@@ -3,16 +3,40 @@ import SnapKit
 
 class ViewController: UIViewController {
     
+    // = 버튼 클릭 시 수식을 계산하는 함수
+    func calculate(expression: String) -> Int? {
+        let expression = NSExpression(format: expression)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
+    }
+    
+    // 버튼 클릭 이벤트 처리 함수
     @objc func didTapButton(_ sender: UIButton) {
         guard let input = sender.title(for: .normal) else { return }
         
+        // 초기화 버튼 처리
         if input == "AC" {
             formulaLabel.text = "0"
             return
         }
         
+        // 연산 실행 버튼 처리
+        if input == "=" {
+            guard let expression = formulaLabel.text,
+                  let result = calculate(expression: expression) else {
+                formulaLabel.text = "Error"
+                return
+            }
+            formulaLabel.text = "\(result)"
+            return
+        }
+        
         var current = formulaLabel.text ?? "0"
         
+        // 숫자 입력 시 0 제거
         if current == "0" && !"÷×+-*/=".contains(input) {
             current = ""
         }
@@ -26,6 +50,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // 수식을 표시할 UILabel
     let formulaLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .black
@@ -36,6 +61,7 @@ class ViewController: UIViewController {
         return label
     }()
     
+    // 버튼 텍스트 배열
     let buttonRows: [[String]] = [
         ["7", "8", "9", "+"],
         ["4", "5", "6", "-"],
@@ -43,6 +69,7 @@ class ViewController: UIViewController {
         ["AC", "0", "=", "/"]
     ]
     
+    // 버튼을 묶을 세로 스택 뷰
     let verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -52,6 +79,7 @@ class ViewController: UIViewController {
         return stackView
     }()
     
+    // 화면 진입 시 실행
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -60,6 +88,7 @@ class ViewController: UIViewController {
         configureButtons()
     }
     
+    // 수식 레이블 설정
     func configureLabel() {
         view.addSubview(formulaLabel)
         formulaLabel.snp.makeConstraints { make in
@@ -69,6 +98,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // 버튼 생성 및 스택뷰에 배치
     func configureButtons() {
         view.addSubview(verticalStackView)
         
@@ -93,6 +123,7 @@ class ViewController: UIViewController {
             return button
         }
         
+        // 버튼들을 수평 스택에 담고 수직 스택에 추가
         for row in buttonRows {
             let buttons = row.map { title -> UIButton in
                 let bgColor: UIColor = orangeButton.contains(title) ? .orange : UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
@@ -109,6 +140,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // 수평 스택뷰 생성 함수
     func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .horizontal
