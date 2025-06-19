@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-// 계산기 메인 뷰컨트롤러
+// 메인 뷰컨트롤러
 class ViewController: UIViewController {
     
     let formulaLabel: UILabel = {
@@ -37,3 +37,5 @@ class ViewController: UIViewController {
         configureButtons()
     }
 }
+
+
