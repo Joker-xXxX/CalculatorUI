@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-// 메인 뷰컨트롤러
+// 메인 뷰 컨트롤러
 class ViewController: UIViewController {
     
     let formulaLabel: UILabel = {
