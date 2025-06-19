@@ -69,6 +69,3 @@ ViewController+Logic.swift           // 버튼 로직 및 계산 처리
 
 ---
 
-개발자: @iseobeom  
-버전: 1.0  
-라이선스: MIT
