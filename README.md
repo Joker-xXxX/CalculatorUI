@@ -33,8 +33,9 @@ let buttonRows: [[String]] = [
 
 ## 실행 방법
 이 저장소를 클론합니다.
-
+```bash
 git clone https://github.com/Joker-xXxX/CalculatorUI.git
+```
 CalculatorUI.xcodeproj 또는 .xcworkspace를 엽니다.
 
 시뮬레이터 또는 실제 디바이스에서 실행합니다.
