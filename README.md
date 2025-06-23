@@ -47,13 +47,14 @@ CalculatorUI.xcodeproj 또는 .xcworkspace를 엽니다.
 MVVM 아키텍처로 리팩토링
 
 ## 폴더 구조
+```cpp
 📂 CalculatorUI
 ├── 📄 ViewController.swift         // 메인 계산기 UI 로직
 ├── 📂 Assets.xcassets              // 앱 아이콘 및 이미지 자산
 ├── 📄 Info.plist                   // 앱 설정
 ├── 📄 SceneDelegate.swift          // 앱 시작 설정
 └── ...
-
+```
 
 ## 만든 사람
 Joker-xXxX (https://github.com/Joker-xXxX)
